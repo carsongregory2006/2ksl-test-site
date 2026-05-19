@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2KSL | The Premier Rec Basketball League</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,700;1,14..32,800;1,14..32,900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'neon': '#F07820',
+            'neon-dark': '#C8601A',
+            'neon-gray': '#888888',
+            'ksl-gray': '#F2F2F0',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    .scroll-hidden { scrollbar-width: none; -ms-overflow-style: none; }
+    .scroll-hidden::-webkit-scrollbar { display: none; }
+
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.28s ease; }
+    .faq-open .faq-answer { max-height: 300px; }
+    .faq-icon { transition: transform 0.28s ease; display: inline-block; }
+    .faq-open .faq-icon { transform: rotate(45deg); }
+
+    .panel-img { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .campaign-panel:hover .panel-img { transform: scale(1.04); }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: #fff;
+      transition: width 0.2s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .hero-img-panel {
+      position: absolute;
+      top: 100px;
+      right: 56px;
+      bottom: 72px;
+      width: 36%;
+      border-radius: 2px;
+    }
+    @media (max-width: 1023px) {
+      .hero-img-panel {
+        position: relative;
+        top: auto; right: auto; bottom: auto;
+        width: 72%;
+        max-width: 320px;
+        height: 260px;
+        margin: 40px auto 0;
+        flex-shrink: 0;
+        border-radius: 2px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-black font-sans overflow-x-hidden">
+
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/[0.08]">
+    <div class="max-w-[1440px] mx-auto px-5 h-[52px] flex items-center justify-between gap-6">
+
+      <a href="#" class="flex items-center flex-shrink-0">
+        <img src="brand_assets/2k logo.png" alt="2KSL" class="h-7 w-auto">
+      </a>
+
+      <div class="hidden lg:flex items-center gap-7">
+        <a href="#" class="nav-link text-white/70 text-[12px] font-medium hover:text-white transition-colors duration-150">League</a>
+        <a href="#" class="nav-link text-white/70 text-[12px] font-medium hover:text-white transition-colors duration-150">Locations</a>
+        <a href="#" class="nav-link text-white/70 text-[12px] font-medium hover:text-white transition-colors duration-150">Schedule</a>
+        <a href="#" class="nav-link text-white/70 text-[12px] font-medium hover:text-white transition-colors duration-150">Community</a>
+        <a href="#" class="nav-link text-white/70 text-[12px] font-medium hover:text-white transition-colors duration-150">Merch</a>
+        <a href="#" class="nav-link text-white/70 text-[12px] font-medium hover:text-white transition-colors duration-150">2KSL Summer</a>
+      </div>
+
+      <div class="flex items-center gap-4 flex-shrink-0">
+        <a href="#" class="hidden sm:block text-white/60 text-[12px] font-medium hover:text-white transition-colors duration-150 active:opacity-70">Login</a>
+        <a href="#" class="bg-neon text-black text-[11px] font-bold px-4 py-[7px] rounded-full tracking-wide hover:bg-neon-dark transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon">Join The League</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative bg-black flex flex-col lg:flex-row lg:items-center justify-end overflow-hidden" style="min-height: 88vh; padding-top: 52px; padding-bottom: 64px;">
+
+    <!-- Wave background -->
+    <div id="wave-bg" style="position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;">
+      <svg id="wave-svg" xmlns="http://www.w3.org/2000/svg" style="display:block;"></svg>
+      <div id="wave-dot" style="position:absolute;top:0;left:0;width:0.5rem;height:0.5rem;background:rgba(240,120,32,0.85);border-radius:50%;transform:translate3d(calc(var(--wx,-999px) - 50%),calc(var(--wy,-999px) - 50%),0);will-change:transform;"></div>
+    </div>
+
+    <!-- Left: text content -->
+    <div class="relative z-10 max-w-[1440px] mx-auto px-5 w-full flex flex-col lg:flex-row lg:items-end lg:gap-0">
+      <div class="lg:w-[58%] lg:pb-0">
+        <p class="text-neon text-[10px] font-bold uppercase tracking-[0.25em] mb-5">2K Sports League</p>
+        <h1 class="text-white font-black leading-[0.9] tracking-[-0.02em] mb-5"
+            style="font-size: clamp(2.8rem, 6.5vw, 6rem);">
+          The Premier Rec<br>Basketball League
+        </h1>
+        <p class="text-white/55 text-[14px] font-medium mb-8 leading-snug max-w-[420px]">
+          500+ Athletes. 5 Skill Levels. One Community.
+        </p>
+        <div class="flex items-center gap-3 flex-wrap">
+          <a href="#" class="bg-neon text-black text-[12px] font-bold px-6 py-3 rounded-full hover:bg-neon-dark transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon">Join The League</a>
+          <a href="#" class="text-white text-[12px] font-bold px-6 py-3 rounded-full border border-white/35 hover:border-white/70 transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/50">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: framed image panel -->
+    <div class="hero-img-panel z-10">
+      <div class="w-full h-full relative overflow-hidden" style="border: 1px solid rgba(240,120,32,0.35); box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.5), 0 32px 80px rgba(0,0,0,0.7), 0 0 60px rgba(240,120,32,0.06);">
+        <img src="brand_assets/2k pic 1.jpg" alt="2KSL Athletes" class="w-full h-full object-cover object-top">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40"></div>
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);"></div>
+      </div>
+    </div>
+
+    <!-- Bottom fade: hero dissolves into stats -->
+    <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none" style="z-index:8; background: linear-gradient(to top, #000000 0%, transparent 100%);"></div>
+
+  </section>
+
+  <!-- STATS -->
+  <section class="bg-black pt-16 pb-14 border-t border-white/[0.07]">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 mb-10">
+        <div>
+          <div class="text-white font-black leading-none tracking-tight mb-1" style="font-size: clamp(2.4rem, 5vw, 5rem);">500+</div>
+          <div class="text-white/40 font-light text-[15px]">Athletes</div>
+        </div>
+        <div>
+          <div class="text-white font-black leading-none tracking-tight mb-1" style="font-size: clamp(2.4rem, 5vw, 5rem);">20+</div>
+          <div class="text-white/40 font-light text-[15px]">Events Per Week</div>
+        </div>
+        <div>
+          <div class="text-white font-black leading-none tracking-tight mb-1" style="font-size: clamp(2.4rem, 5vw, 5rem);">5</div>
+          <div class="text-white/40 font-light text-[15px]">Divisions</div>
+        </div>
+        <div>
+          <div class="text-white font-black leading-none tracking-tight mb-1" style="font-size: clamp(2.4rem, 5vw, 5rem);">10+</div>
+          <div class="text-white/40 font-light text-[15px]">Cities</div>
+        </div>
+      </div>
+      <a href="#" class="inline-block bg-neon text-black text-[12px] font-bold px-6 py-3 rounded-full hover:bg-neon-dark transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon">Join The League</a>
+    </div>
+  </section>
+
+  <!-- 2×2 CAMPAIGN GRID -->
+  <section class="p-[3px] bg-white rounded-2xl overflow-hidden mx-4 md:mx-6 my-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-[3px]">
+
+    <!-- Panel 1: 2k pic 2.jpg — dunk action -->
+    <div class="campaign-panel relative overflow-hidden bg-zinc-900 rounded-tl-[18px]" style="aspect-ratio:4/3;">
+      <img src="brand_assets/2k pic 2.jpg" alt="Game Time" class="panel-img w-full h-full object-cover object-top">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-7 md:p-8">
+        <p class="text-neon/70 text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">Game Time</p>
+        <h3 class="text-white font-bold text-[1.2rem] leading-tight mb-3 max-w-[260px]">Every Play Matters.</h3>
+        <p class="text-white/50 text-[12px] leading-relaxed mb-5 max-w-[260px]">Where Rec Ball Gets Serious. Show Up, Show Out, Every Night.</p>
+        <a href="#" class="text-white text-[12px] font-semibold underline underline-offset-4 hover:text-neon transition-colors duration-150">See The Action</a>
+      </div>
+    </div>
+
+    <!-- Panel 2: 2k hoodie.png — merch -->
+    <div class="campaign-panel relative overflow-hidden rounded-tr-[18px]" style="aspect-ratio:4/3; background:#1a1a1a;">
+      <img src="brand_assets/2k hoodie.png" alt="2KSL Gear" class="panel-img w-full h-full object-contain object-center">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-7 md:p-8">
+        <p class="text-neon/70 text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">2KSL Gear</p>
+        <h3 class="text-white font-bold text-[1.2rem] leading-tight mb-3 max-w-[260px]">Wear The League.</h3>
+        <p class="text-white/50 text-[12px] leading-relaxed mb-5 max-w-[260px]">Official 2KSL apparel. Engineered for the court, built for the streets.</p>
+        <a href="#" class="text-white text-[12px] font-semibold underline underline-offset-4 hover:text-neon transition-colors duration-150">Shop Gear</a>
+      </div>
+    </div>
+
+    <!-- Panel 3: 2k pic 3.jpg — layup -->
+    <div class="campaign-panel relative overflow-hidden bg-zinc-900 rounded-bl-[18px]" style="aspect-ratio:4/3;">
+      <img src="brand_assets/2k pic 3.jpg" alt="Compete" class="panel-img w-full h-full object-cover object-top">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-7 md:p-8">
+        <p class="text-neon/70 text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">Compete</p>
+        <h3 class="text-white font-bold text-[1.2rem] leading-tight mb-3 max-w-[260px]">5 Divisions. One Crown.</h3>
+        <p class="text-white/50 text-[12px] leading-relaxed mb-5 max-w-[260px]">From Rookie to Elite — there's a level for everyone ready to compete.</p>
+        <a href="#" class="text-white text-[12px] font-semibold underline underline-offset-4 hover:text-neon transition-colors duration-150">View Divisions</a>
+      </div>
+    </div>
+
+    <!-- Panel 4: placeholder — community -->
+    <div class="campaign-panel relative overflow-hidden bg-zinc-900 rounded-br-[18px]" style="aspect-ratio:4/3;">
+      <img src="https://placehold.co/800x600/0d0d0d/1a1a1a" alt="Community" class="panel-img w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 p-7 md:p-8">
+        <p class="text-neon/70 text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">Community</p>
+        <h3 class="text-white font-bold text-[1.2rem] leading-tight mb-3 max-w-[260px]">More Than A League.</h3>
+        <p class="text-white/50 text-[12px] leading-relaxed mb-5 max-w-[260px]">Stats, stories, and highlights from every game. Your moments, documented.</p>
+        <a href="#" class="text-white text-[12px] font-semibold underline underline-offset-4 hover:text-neon transition-colors duration-150">Join The Community</a>
+      </div>
+    </div>
+
+  </div>
+  </section>
+
+  <!-- THE 2KSL EXPERIENCE™ -->
+  <section class="bg-white py-14">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <h2 class="text-black font-black text-[1.75rem] md:text-[2.25rem] tracking-tight mb-1">The 2KSL Experience™</h2>
+      <p class="text-black/45 text-[13px] mb-9 max-w-xl leading-relaxed">Custom jerseys, pro-level media, championship celebrations, real stats, and a community built around the game you love.</p>
+
+      <div class="flex gap-4 overflow-x-auto scroll-hidden pb-3 -mx-5 px-5">
+        <div class="flex-shrink-0 w-[260px] bg-[#f5f5f3] overflow-hidden">
+          <img src="https://placehold.co/260x170/e8e8e6/d0d0ce" alt="Custom Jerseys" class="w-full h-[170px] object-cover">
+          <div class="p-5">
+            <h4 class="font-bold text-black text-[14px] mb-1 leading-snug">Custom Jerseys</h4>
+            <p class="text-black/50 text-[12px] leading-relaxed">Your name, your number. Pro-level design every season.</p>
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-[260px] bg-[#f5f5f3] overflow-hidden">
+          <img src="https://placehold.co/260x170/e8e8e6/d0d0ce" alt="Pro Highlight Reels" class="w-full h-[170px] object-cover">
+          <div class="p-5">
+            <h4 class="font-bold text-black text-[14px] mb-1 leading-snug">Pro Highlight Reels</h4>
+            <p class="text-black/50 text-[12px] leading-relaxed">Every game captured. Your best moments edited and delivered.</p>
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-[260px] bg-[#f5f5f3] overflow-hidden">
+          <img src="https://placehold.co/260x170/e8e8e6/d0d0ce" alt="Championship Rings" class="w-full h-[170px] object-cover">
+          <div class="p-5">
+            <h4 class="font-bold text-black text-[14px] mb-1 leading-snug">Championship Rings</h4>
+            <p class="text-black/50 text-[12px] leading-relaxed">Win the chip. Feel what it means to be a 2KSL champion.</p>
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-[260px] bg-[#f5f5f3] overflow-hidden">
+          <img src="https://placehold.co/260x170/e8e8e6/d0d0ce" alt="Stats and Leaderboards" class="w-full h-[170px] object-cover">
+          <div class="p-5">
+            <h4 class="font-bold text-black text-[14px] mb-1 leading-snug">Stats &amp; Leaderboards</h4>
+            <p class="text-black/50 text-[12px] leading-relaxed">Track your numbers. See where you rank across the league.</p>
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-[260px] bg-[#f5f5f3] overflow-hidden">
+          <img src="https://placehold.co/260x170/e8e8e6/d0d0ce" alt="Community Events" class="w-full h-[170px] object-cover">
+          <div class="p-5">
+            <h4 class="font-bold text-black text-[14px] mb-1 leading-snug">Community Events</h4>
+            <p class="text-black/50 text-[12px] leading-relaxed">All-Star nights, fan events, and cultural touchpoints beyond the game.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-[6px] mt-6">
+        <button class="w-[7px] h-[7px] rounded-full bg-black active:opacity-60"></button>
+        <button class="w-[7px] h-[7px] rounded-full bg-black/20 active:opacity-60"></button>
+        <button class="w-[7px] h-[7px] rounded-full bg-black/20 active:opacity-60"></button>
+        <span class="ml-1 text-black/30 text-[11px] font-medium">&#9654;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVISIONS -->
+  <section class="bg-ksl-gray py-14">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <h2 class="text-black font-black text-[1.6rem] md:text-[2rem] tracking-tight leading-tight mb-1">A 10 Week Basketball Season</h2>
+      <h2 class="text-black font-black text-[1.6rem] md:text-[2rem] tracking-tight leading-tight mb-10">Across 5 Skill Levels.</h2>
+
+      <div class="flex gap-4 overflow-x-auto scroll-hidden pb-3 -mx-5 px-5">
+
+        <!-- D5 -->
+        <div class="flex-shrink-0 w-[220px] bg-white overflow-hidden">
+          <div class="relative h-[180px] overflow-hidden">
+            <img src="https://placehold.co/220x180/1a1a1a/2a2a2a" alt="D5 Rookie" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3"><span class="text-white/60 text-[10px] font-semibold">Open Enrollment</span></div>
+          </div>
+          <div class="p-4">
+            <p class="text-[9px] font-bold text-black/35 uppercase tracking-[0.15em] mb-0.5">D5</p>
+            <h3 class="font-black text-black text-[1.2rem] leading-none mb-1">Rookie</h3>
+            <p class="text-black/40 text-[10px] font-semibold mb-2">Where The Game Begins.</p>
+            <p class="text-black/55 text-[11px] leading-relaxed mb-4">D5 is for those learning the fundamentals, building confidence, and getting their first real taste of organized ball. All skill levels welcome.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="text-[9px] font-semibold text-neon border border-neon/30 px-2 py-0.5">Foundation</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Learning</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Effort</span>
+            </div>
+            <a href="#" class="block text-center bg-black text-white text-[11px] font-bold py-2.5 hover:bg-zinc-800 transition-colors duration-150 active:opacity-70">Start as a Rookie</a>
+          </div>
+        </div>
+
+        <!-- D4 -->
+        <div class="flex-shrink-0 w-[220px] bg-white overflow-hidden">
+          <div class="relative h-[180px] overflow-hidden">
+            <img src="https://placehold.co/220x180/1a1a1a/2a2a2a" alt="D4 Rec" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3"><span class="text-white/60 text-[10px] font-semibold">Spots Available</span></div>
+          </div>
+          <div class="p-4">
+            <p class="text-[9px] font-bold text-black/35 uppercase tracking-[0.15em] mb-0.5">D4</p>
+            <h3 class="font-black text-black text-[1.2rem] leading-none mb-1">Rec</h3>
+            <p class="text-black/40 text-[10px] font-semibold mb-2">Growth Starts Here.</p>
+            <p class="text-black/55 text-[11px] leading-relaxed mb-4">D4 is for players sharpening their skills, improving their game IQ, and showing flashes of potential. The space between learning and competing.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="text-[9px] font-semibold text-neon border border-neon/30 px-2 py-0.5">Development</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Grind</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Elevate</span>
+            </div>
+            <a href="#" class="block text-center bg-black text-white text-[11px] font-bold py-2.5 hover:bg-zinc-800 transition-colors duration-150 active:opacity-70">Play at Rec Level</a>
+          </div>
+        </div>
+
+        <!-- D3 -->
+        <div class="flex-shrink-0 w-[220px] bg-white overflow-hidden">
+          <div class="relative h-[180px] overflow-hidden">
+            <img src="https://placehold.co/220x180/1a1a1a/2a2a2a" alt="D3 Inter" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3"><span class="text-white/60 text-[10px] font-semibold">Spots Available</span></div>
+          </div>
+          <div class="p-4">
+            <p class="text-[9px] font-bold text-black/35 uppercase tracking-[0.15em] mb-0.5">D3</p>
+            <h3 class="font-black text-black text-[1.2rem] leading-none mb-1">Inter</h3>
+            <p class="text-black/40 text-[10px] font-semibold mb-2">You've Got Game.</p>
+            <p class="text-black/55 text-[11px] leading-relaxed mb-4">D3 players are consistent, confident, and ready to compete at pace. You know the systems and you bring it every night.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="text-[9px] font-semibold text-neon border border-neon/30 px-2 py-0.5">Skill</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Execution</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Focus</span>
+            </div>
+            <a href="#" class="block text-center bg-black text-white text-[11px] font-bold py-2.5 hover:bg-zinc-800 transition-colors duration-150 active:opacity-70">Compete with Inter</a>
+          </div>
+        </div>
+
+        <!-- D2 -->
+        <div class="flex-shrink-0 w-[220px] bg-white overflow-hidden">
+          <div class="relative h-[180px] overflow-hidden">
+            <img src="https://placehold.co/220x180/1a1a1a/2a2a2a" alt="D2 Comp" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3"><span class="text-white/60 text-[10px] font-semibold">Limited Spots</span></div>
+          </div>
+          <div class="p-4">
+            <p class="text-[9px] font-bold text-black/35 uppercase tracking-[0.15em] mb-0.5">D2</p>
+            <h3 class="font-black text-black text-[1.2rem] leading-none mb-1">Comp</h3>
+            <p class="text-black/40 text-[10px] font-semibold mb-2">Every Game Is A Statement.</p>
+            <p class="text-black/55 text-[11px] leading-relaxed mb-4">D2 is for high-level players refining their edge, preparing for exposure, and proving they belong in the top tier.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="text-[9px] font-semibold text-neon border border-neon/30 px-2 py-0.5">Pressure</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Poise</span>
+              <span class="text-[9px] font-semibold text-black/40 border border-black/15 px-2 py-0.5">Prepared</span>
+            </div>
+            <a href="#" class="block text-center bg-black text-white text-[11px] font-bold py-2.5 hover:bg-zinc-800 transition-colors duration-150 active:opacity-70">Dominate in Comp</a>
+          </div>
+        </div>
+
+        <!-- D1 -->
+        <div class="flex-shrink-0 w-[220px] bg-black overflow-hidden">
+          <div class="relative h-[180px] overflow-hidden">
+            <img src="https://placehold.co/220x180/0d0d0d/1a1a1a" alt="D1 Elite" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3"><span class="text-white/50 text-[10px] font-semibold">Invite Only</span></div>
+          </div>
+          <div class="p-4">
+            <p class="text-[9px] font-bold text-white/25 uppercase tracking-[0.15em] mb-0.5">D1</p>
+            <h3 class="font-black text-white text-[1.2rem] leading-none mb-1">Elite</h3>
+            <p class="text-white/35 text-[10px] font-semibold mb-2">Where Legends Are Made.</p>
+            <p class="text-white/45 text-[11px] leading-relaxed mb-4">D1 is for the elite. This is where the best compete, every move matters, and legacies are built night after night.</p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="text-[9px] font-semibold text-neon border border-neon/30 px-2 py-0.5">Legend</span>
+              <span class="text-[9px] font-semibold text-white/30 border border-white/15 px-2 py-0.5">Athlete</span>
+              <span class="text-[9px] font-semibold text-white/30 border border-white/15 px-2 py-0.5">Stories</span>
+            </div>
+            <a href="#" class="block text-center bg-neon text-black text-[11px] font-bold py-2.5 hover:bg-neon-dark transition-colors duration-150 active:opacity-70">Join the Elite</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYER STORIES -->
+  <section class="bg-ksl-gray border-t border-black/[0.07] py-14">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <h2 class="text-black font-black text-[1.6rem] md:text-[2rem] tracking-tight mb-1">Player Stories</h2>
+      <p class="text-black/45 text-[13px] mb-9">The league speaks for itself. Hear from athletes who've lived it.</p>
+
+      <div class="flex gap-4 overflow-x-auto scroll-hidden pb-3 -mx-5 px-5">
+
+        <div class="flex-shrink-0 w-[270px] bg-white p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[13px] font-bold text-zinc-400">M</span>
+            </div>
+            <div>
+              <p class="font-bold text-black text-[13px] leading-tight">Marcus T</p>
+              <p class="text-black/35 text-[10px] font-semibold uppercase tracking-wider">Toronto, ON</p>
+            </div>
+          </div>
+          <p class="text-black/65 text-[13px] leading-relaxed">"2KSL gave me a reason to ball again. The level of organization — jerseys, stats, highlights — it's legit."</p>
+        </div>
+
+        <div class="flex-shrink-0 w-[270px] bg-white p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[13px] font-bold text-zinc-400">J</span>
+            </div>
+            <div>
+              <p class="font-bold text-black text-[13px] leading-tight">Jordan W</p>
+              <p class="text-black/35 text-[10px] font-semibold uppercase tracking-wider">Mississauga, ON</p>
+            </div>
+          </div>
+          <p class="text-black/65 text-[13px] leading-relaxed">"I played college ball and nothing has replicated that competitive environment until 2KSL. The community is real."</p>
+        </div>
+
+        <div class="flex-shrink-0 w-[270px] bg-white p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[13px] font-bold text-zinc-400">D</span>
+            </div>
+            <div>
+              <p class="font-bold text-black text-[13px] leading-tight">Devon A</p>
+              <p class="text-black/35 text-[10px] font-semibold uppercase tracking-wider">Brampton, ON</p>
+            </div>
+          </div>
+          <p class="text-black/65 text-[13px] leading-relaxed">"Every season I look forward to game day. The highlight reels alone are worth it — my family loves watching."</p>
+        </div>
+
+        <div class="flex-shrink-0 w-[270px] bg-white p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[13px] font-bold text-zinc-400">K</span>
+            </div>
+            <div>
+              <p class="font-bold text-black text-[13px] leading-tight">Kyle R</p>
+              <p class="text-black/35 text-[10px] font-semibold uppercase tracking-wider">Vaughan, ON</p>
+            </div>
+          </div>
+          <p class="text-black/65 text-[13px] leading-relaxed">"The custom jerseys, the championships, the vibe — 2KSL makes you feel like a pro even at the rec level."</p>
+        </div>
+
+        <div class="flex-shrink-0 w-[270px] bg-white p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[13px] font-bold text-zinc-400">A</span>
+            </div>
+            <div>
+              <p class="font-bold text-black text-[13px] leading-tight">Anthony S</p>
+              <p class="text-black/35 text-[10px] font-semibold uppercase tracking-wider">Scarborough, ON</p>
+            </div>
+          </div>
+          <p class="text-black/65 text-[13px] leading-relaxed">"Joined at D4, now I'm running D2. The progression system keeps you hungry. Best league in the city, no cap."</p>
+        </div>
+
+        <div class="flex-shrink-0 w-[270px] bg-white p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[13px] font-bold text-zinc-400">R</span>
+            </div>
+            <div>
+              <p class="font-bold text-black text-[13px] leading-tight">Ryan P</p>
+              <p class="text-black/35 text-[10px] font-semibold uppercase tracking-wider">North York, ON</p>
+            </div>
+          </div>
+          <p class="text-black/65 text-[13px] leading-relaxed">"The app, the stats, the clips — 2KSL runs it like a real organization. My whole squad signed up after our first season."</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FIND A LOCATION -->
+  <section class="bg-ksl-gray border-t border-black/[0.07] py-14">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <h2 class="text-black font-black text-[1.6rem] md:text-[2rem] tracking-tight mb-2">Find A 2KSL Location</h2>
+      <p class="text-black/45 text-[13px] mb-10">10+ Cities. Multiple Divisions. Year-Round Play.</p>
+      <div class="flex flex-col gap-0.5">
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Toronto</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Mississauga</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Brampton</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Vaughan</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Scarborough</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">North York</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Markham</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Oakville</a>
+        <a href="#" class="text-black text-[14px] font-medium py-1.5 hover:text-neon transition-colors duration-150 active:opacity-50 w-fit">Hamilton</a>
+        <span class="text-black/30 text-[14px] font-medium py-1.5">More Cities Coming Soon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="bg-ksl-gray border-t border-black/[0.07] py-14">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <h2 class="text-black font-black text-[1.6rem] md:text-[2rem] tracking-tight mb-10">FAQs</h2>
+      <div class="max-w-[720px]">
+
+        <div class="faq-item border-t border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">Can I Join If I've Never Played Organized Basketball?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">Yes. Our D5 Rookie division is designed for beginners and anyone new to organized basketball. We welcome all skill levels — just show up ready to learn and compete.</p>
+          </div>
+        </div>
+
+        <div class="faq-item border-t border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">Is There A 2KSL Location Near Me?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">We're currently operating in 10+ cities across the Greater Toronto Area and expanding. Check our locations page for the full list and upcoming cities.</p>
+          </div>
+        </div>
+
+        <div class="faq-item border-t border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">Do I Get A Custom Jersey?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">Yes. Every 2KSL athlete receives a custom jersey with their name and number. Your jersey is yours to keep after the season.</p>
+          </div>
+        </div>
+
+        <div class="faq-item border-t border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">What Are The 5 Skill Levels?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">D5 Rookie (beginner), D4 Rec (developing), D3 Inter (intermediate), D2 Comp (competitive), D1 Elite (top-tier). Every player can find their level and grow from there.</p>
+          </div>
+        </div>
+
+        <div class="faq-item border-t border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">How Long Is A Season?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">Each 2KSL season runs for 10 weeks, with regular-season games followed by playoffs and a championship final. New seasons run throughout the year.</p>
+          </div>
+        </div>
+
+        <div class="faq-item border-t border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">What's The Cost To Register?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">Pricing varies by city and division. Visit your local location page for exact pricing. Your season cost covers your custom jersey, 10 weeks of play, pro media, and championship celebrations.</p>
+          </div>
+        </div>
+
+        <div class="faq-item border-t border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">What's The Refund Policy?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">Refund requests submitted before the season start date are handled on a case-by-case basis. Please review our full Refund Policy for details.</p>
+          </div>
+        </div>
+
+        <div class="faq-item border-t border-b border-black/15 cursor-pointer" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-6 py-5">
+            <span class="font-medium text-black text-[14px]">What's Included In My Season Registration?</span>
+            <span class="faq-icon text-black text-[20px] font-light leading-none flex-shrink-0">+</span>
+          </div>
+          <div class="faq-answer">
+            <p class="text-black/55 text-[13px] leading-relaxed pb-5">Your registration includes a custom jersey, 10 weeks of scheduled games, pro-level media and highlights, digital stats and leaderboards, and championship celebrations for winning teams.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN THE LEAGUE -->
+  <section class="bg-white py-14">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <h2 class="text-black font-black text-[1.6rem] md:text-[2rem] tracking-tight mb-8">Join The League</h2>
+      <div class="flex items-center gap-3 flex-wrap">
+        <a href="#" class="bg-neon text-black text-[12px] font-bold px-6 py-3 rounded-full hover:bg-neon-dark transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon">Join The League</a>
+        <a href="#" class="text-black text-[12px] font-bold px-6 py-3 rounded-full border border-black/25 hover:border-black/60 transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-black/30">Partner With 2KSL</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP DOWNLOAD -->
+  <section class="bg-black py-14">
+    <div class="max-w-[1440px] mx-auto px-5">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+        <div>
+          <p class="text-white/35 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Stats, Team Chats, Leaderboards &amp; More.</p>
+          <h2 class="text-white font-black leading-[0.95] tracking-tight" style="font-size: clamp(1.75rem, 4vw, 3rem);">
+            Download The<br>2KSL App
+          </h2>
+          <p class="text-white/40 text-[13px] mt-3 max-w-sm">Track your stats, find your team, and follow the league — all in one place.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="#" class="flex items-center gap-2.5 bg-white text-black text-[12px] font-bold px-5 py-3 hover:bg-zinc-100 transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            App Store
+          </a>
+          <a href="#" class="flex items-center gap-2.5 bg-white text-black text-[12px] font-bold px-5 py-3 hover:bg-zinc-100 transition-colors duration-150 active:scale-95 transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 0 2.07-.19l.06-.06 11.62-6.71-2.54-2.54-11.21 9.5zM.44 1.57A2 2 0 0 0 0 2.9v18.2a2 2 0 0 0 .44 1.33l.07.07 10.18-10.18v-.24L.51 1.5l-.07.07zM19.89 10.37l-2.64-1.52-2.84 2.84 2.84 2.84 2.66-1.54a2.02 2.02 0 0 0 0-3.62zM3.18.24L14.39 6.94l-2.54 2.54L.51.24.44.17A2 2 0 0 1 3.18.24z"/></svg>
+            Google Play
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-white/[0.07] pt-14 pb-8">
+    <div class="max-w-[1440px] mx-auto px-5">
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10 mb-14">
+
+        <div>
+          <p class="text-white/25 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">League</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">About</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Experience</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Divisions</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Awards</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Stats</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-white/25 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Locations</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Toronto</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Mississauga</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Brampton</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Vaughan</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Markham</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">See All</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-white/25 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Schedule</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Current Season</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Playoffs</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Results</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-white/25 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Community</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Player Stories</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Highlights</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Press</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Careers</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-white/25 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Partner</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Request A City</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Start A League</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Venue Partners</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-white/25 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">Login</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">My Account</a></li>
+            <li><a href="#" class="text-white/50 text-[12px] hover:text-white transition-colors duration-150">Sign Up</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/[0.07] pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3 flex-wrap">
+          <img src="brand_assets/2k logo.png" alt="2KSL" class="h-5 w-auto opacity-40">
+          <span class="text-white/25 text-[11px]">Toronto, Ontario, Canada</span>
+          <span class="text-white/20 text-[11px] hidden sm:inline">·</span>
+          <a href="mailto:info@2ksl.com" class="text-white/25 text-[11px] hover:text-white/50 transition-colors duration-150 hidden sm:inline">info@2ksl.com</a>
+        </div>
+        <div class="flex items-center gap-5 flex-wrap">
+          <a href="#" class="text-white/25 text-[11px] hover:text-white/50 transition-colors duration-150">Privacy Policy</a>
+          <a href="#" class="text-white/25 text-[11px] hover:text-white/50 transition-colors duration-150">Refund Policy</a>
+          <span class="text-white/15 text-[11px]">© 2026 2KSL Sports Group™ All Rights Reserved.</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    function toggleFaq(el) {
+      const isOpen = el.classList.contains('faq-open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('faq-open'));
+      if (!isOpen) el.classList.add('faq-open');
+    }
+  </script>
+
+  <script type="module">
+    import { createNoise2D } from 'https://esm.sh/simplex-noise@4';
+
+    const container = document.getElementById('wave-bg');
+    const svg       = document.getElementById('wave-svg');
+    const dot       = document.getElementById('wave-dot');
+    const STROKE    = 'rgba(240,120,32,0.18)';
+
+    const noise2D = createNoise2D();
+
+    const mouse = { x: -999, y: -999, lx: 0, ly: 0, sx: -999, sy: -999, v: 0, vs: 0, a: 0, set: false };
+    let paths = [], lines = [], bounding = null;
+
+    function setSize() {
+      bounding = container.getBoundingClientRect();
+      svg.style.width  = bounding.width  + 'px';
+      svg.style.height = bounding.height + 'px';
+    }
+
+    function setLines() {
+      if (!bounding) return;
+      const { width, height } = bounding;
+      paths.forEach(p => p.remove());
+      paths = []; lines = [];
+
+      const xGap = 8, yGap = 8;
+      const oW = width + 200, oH = height + 30;
+      const cols = Math.ceil(oW / xGap), rows = Math.ceil(oH / yGap);
+      const x0 = (width  - xGap * cols) / 2;
+      const y0 = (height - yGap * rows) / 2;
+
+      for (let i = 0; i < cols; i++) {
+        const pts = [];
+        for (let j = 0; j < rows; j++) {
+          pts.push({ x: x0 + xGap * i, y: y0 + yGap * j,
+            wave: { x: 0, y: 0 }, cursor: { x: 0, y: 0, vx: 0, vy: 0 } });
+        }
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', STROKE);
+        path.setAttribute('stroke-width', '1');
+        svg.appendChild(path);
+        paths.push(path);
+        lines.push(pts);
+      }
+    }
+
+    function movePoints(t) {
+      lines.forEach(pts => pts.forEach(p => {
+        const m = noise2D((p.x + t * 0.008) * 0.003, (p.y + t * 0.003) * 0.002) * 8;
+        p.wave.x = Math.cos(m) * 12;
+        p.wave.y = Math.sin(m) * 6;
+
+        const dx = p.x - mouse.sx, dy = p.y - mouse.sy;
+        const d  = Math.hypot(dx, dy), l = Math.max(175, mouse.vs);
+        if (d < l) {
+          const s = 1 - d / l, f = Math.cos(d * 0.001) * s;
+          p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035;
+          p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035;
+        }
+        p.cursor.vx += (0 - p.cursor.x) * 0.01;
+        p.cursor.vy += (0 - p.cursor.y) * 0.01;
+        p.cursor.vx *= 0.95; p.cursor.vy *= 0.95;
+        p.cursor.x  += p.cursor.vx; p.cursor.y += p.cursor.vy;
+        p.cursor.x = Math.min(50, Math.max(-50, p.cursor.x));
+        p.cursor.y = Math.min(50, Math.max(-50, p.cursor.y));
+      }));
+    }
+
+    function mv(p, cur = true) {
+      return { x: p.x + p.wave.x + (cur ? p.cursor.x : 0),
+               y: p.y + p.wave.y + (cur ? p.cursor.y : 0) };
+    }
+
+    function drawLines() {
+      lines.forEach((pts, i) => {
+        if (pts.length < 2 || !paths[i]) return;
+        const f = mv(pts[0], false);
+        let d = `M ${f.x} ${f.y}`;
+        for (let j = 1; j < pts.length; j++) { const c = mv(pts[j]); d += ` L ${c.x} ${c.y}`; }
+        paths[i].setAttribute('d', d);
+      });
+    }
+
+    function tick(t) {
+      mouse.sx += (mouse.x - mouse.sx) * 0.1;
+      mouse.sy += (mouse.y - mouse.sy) * 0.1;
+      const dx = mouse.x - mouse.lx, dy = mouse.y - mouse.ly;
+      mouse.v  = Math.hypot(dx, dy);
+      mouse.vs += (mouse.v - mouse.vs) * 0.1;
+      mouse.vs  = Math.min(100, mouse.vs);
+      mouse.lx  = mouse.x; mouse.ly = mouse.y;
+      mouse.a   = Math.atan2(dy, dx);
+      container.style.setProperty('--wx', mouse.sx + 'px');
+      container.style.setProperty('--wy', mouse.sy + 'px');
+      movePoints(t); drawLines();
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('mousemove', e => {
+      if (!bounding) return;
+      mouse.x = e.pageX - bounding.left;
+      mouse.y = e.pageY - bounding.top + window.scrollY;
+      if (!mouse.set) {
+        mouse.sx = mouse.x; mouse.sy = mouse.y;
+        mouse.lx = mouse.x; mouse.ly = mouse.y;
+        mouse.set = true;
+      }
+    });
+
+    window.addEventListener('resize', () => { setSize(); setLines(); });
+    setSize(); setLines();
+    requestAnimationFrame(tick);
+  </script>
+
+</body>
+</html>
